@@ -1,19 +1,31 @@
-public class GenericRepository<T> {
+import java.util.Arrays;
+import java.util.List;
+
+public class GenericRepository<T> implements GenericRepo<T> {
+
+  @Override
+  public String toString() {
+    return "GenericRepository{" +
+      "elements=" + Arrays.toString(elements) +
+      ", emptyIndex=" + emptyIndex +
+      '}';
+  }
 
   private Object[] elements;
 
   private int emptyIndex = 0;
 
   public GenericRepository() {
-    this.elements = new Object[100];
+    elements = new Object[]{56,65,6,5,6,6};
   }
 
   public GenericRepository(int size) {
     this.elements = new Object[size];
   }
 
-  public GenericRepository(GenericRepository<T> repo) {
 
+  public GenericRepository(T[] objArray) {
+    elements = objArray;
   }
 
   public void add(T[] elements) {
@@ -93,10 +105,19 @@ public class GenericRepository<T> {
   public void removeAll(T element) {
     // remove all the elements in the array based on the type T -> like if there are 5,5,5,5 in the array
     // use findFirst() and remove(T element)
+    for (int i = 0; i < elements.length; i++) {
+      if (findFirst(element) != -1) {
+        remove(element);
+      }
+    }
+
+
   }
 
-  public void clear(){
-    // clear all the elements in the array
+  public void clear() {
+    for (int i = 0; i < elements.length; i++) {
+      elements[i] = null;
+    }
   }
 
   public void update(int index, T element) {
@@ -106,7 +127,9 @@ public class GenericRepository<T> {
     elements[index] = element;
   }
 
-  public GenericRepository<T> subElements(int from, int to) {
+
+  //Make the ret type GenericRepository<T> and make the method work
+  public T[] subElements(int from, int to) {
     if (from < 0 || from > to || to >= elements.length) {
       return null;
     }
@@ -123,6 +146,10 @@ public class GenericRepository<T> {
     for (int i = 0; i < elements.length; i++) {
       System.out.println(elements[i]);
     }
+  }
+
+  public void print() {
+
   }
 
 }
